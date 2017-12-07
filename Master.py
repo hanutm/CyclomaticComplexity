@@ -6,9 +6,9 @@ Created on Wed Dec  6 14:53:48 2017
 @author: Hanut
 """
 
-from flask import Flask, jsonify
+from flask import Flask
 from flask_restful import Resource,Api, reqparse
-import os,sys,requests,time,getpass
+import os,sys,requests,time, json
 
 app = Flask(__name__)
 api = Api(app)
@@ -23,7 +23,7 @@ class Manager():
         print('Working with unauthenticated requests')
         print('Repositories upto a maximum of 200 commits')
         response = requests.get('url to github repo')
-        resp_data = jsonify(response)
+        resp_data = json.loads(response)
         self.commits = []               ##class commit list variable for storing all sha values
         for i in resp_data:
             self.commits.append(i['sha'])
@@ -44,7 +44,16 @@ class getRepo():
         
     
     def get(self):
-        
+        arguments = self.reqparser.parse_args()
+        if arguments['pullStatus'] == True:
+            print('Not Pulled')
+            return {'repo':'git url'}
+        else :
+            print('Pulled')
+            self.server.WorkerCount += 1
+            if self.server.WorkerCount == self.server.WorkerTotal:
+                self.server.timeStart = time.time()
+            print('Number of Active Workers =',self.server.WorkerCount)
         pass
     
     def post(self):
