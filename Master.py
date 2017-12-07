@@ -15,21 +15,33 @@ api = Api(app)
 
 class Manager:
     def __init__(self):
-        self.timeStart = 0
-        self.WorkerTotal = int(input('Enter total number of workers required'))
-        self.WorkerCount = 0
+        self.timeStart = 0          ## timer variable to compute compilation time
+        self.WorkerTotal = int(input('Enter total number of workers required'))     ##no. of workers available 
+        self.WorkerCount = 0        ## Currently engaged workers
         print('Working with unauthenticated requests')
         print('Repositories upto a maximum of 200 commits')
         response = requests.get('url to github repo')
         resp_data = jsonify(response)
+        self.commits = []               ##class commit list variable for storing all sha values
+        for i in resp_data:
+            self.commits.append(i['sha'])
         
-    pass
-
+        self.numCommits = len(self.commits)         ##Total number of commits
+        
 
 class getRepo():
+    def __init__(self):
+        pass
     
-    pass
+    def get(self):
+        pass
+    
+    def post(self):
+        pass
 
+
+## Add functions to API
+#api.add_resource(func,extension,endpoint)
 
 if __name__ == "__main__":
 
