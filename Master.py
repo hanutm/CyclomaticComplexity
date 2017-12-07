@@ -13,7 +13,7 @@ import os,sys,requests,time,getpass
 app = Flask(__name__)
 api = Api(app)
 
-class Manager:
+class Manager():
     def __init__(self):
         self.timeStart = 0          ## timer variable to compute compilation time
         self.WorkerTotal = int(input('Enter total number of workers required'))     ##no. of workers available 
@@ -30,6 +30,16 @@ class Manager:
         
 
 class getRepo():
+    def __init__(self):
+        pass
+    
+    def get(self):
+        pass
+    
+    def post(self):
+        pass
+
+class API_Cyclo():
     def __init__(self):
         pass
     
