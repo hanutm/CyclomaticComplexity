@@ -63,10 +63,29 @@ class getRepo():
 
 class API_Cyclo():
     def __init__(self):
-        pass
-    
+        global managerServer
+        self.server = managerServer
+        super(API_Cyclo,self).__init__()
+        
+        self.parser = reqparse.RequestParser()
+        
+        ##Add required arguments to parser
+        self.parser.add_argument('sha', type = str, location = 'json')
+        self.parser.add_argument('ccVal', type = float, location = 'json')
+        
+        
     def get(self):
-        pass
+        if self.server.WorkerCount < self.server.WorkerTotal:
+            ##Still Waiting for all workers to join
+            return {'shaVal': 'wait'}
+        elif len(self.server.commits) == 0:
+            ##No Commits to send to worker
+            return {'shaVal' : 'no commits'}
+        else:
+            shaVal = self.server.commits[0]
+            del self.server.commits[0]
+            return {'shaVal' : shaVal}
+        
     
     def post(self):
         pass
