@@ -24,6 +24,19 @@ def execute():
     
     ## GET tasks from getrepo completed
     
+    data = requests.get(cycURL)
+    shaData = json.loads(data.text)
+    sha = shaData['shaVal']
+    if sha == 'wait':
+        ## Wait for server to start sending out SHAs
+    elif sha == 'no commits'
+        ## No commits for this worker. All distributed
+        sys.exit(0)
+    else:
+        commitSHA = sha
+        ## code to roll back local repo to specific commit
+        
+    
     
 if __name__ == '__main__':
     execute()
