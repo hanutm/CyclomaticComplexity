@@ -88,8 +88,16 @@ class API_Cyclo():
         
     
     def post(self):
-        pass
+	arguments = self.reqparser.parse_args()
+	self.server.commits.append({'sha':args['commitSha'], 'complexity':arguments['complexity']})
 
+	if len(self.server.commits) == self.server.numCommits:
+		endtime = time.time() - self.server.timeStart
+		avgCC = 0
+		for x in self.server.commits:
+			avgCC += commits(x['complexity'])
+	avgCC = avgCC/numCommits
+	print("Overall Cyclomatic Complexity = ", avgCC)
 
 ## Add functions to API
 #api.add_resource(func,extension,endpoint)
