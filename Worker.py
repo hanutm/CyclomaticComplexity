@@ -17,8 +17,9 @@ def execute():
 	getCommit = requests.get(getURL,json = {'pullStatus' : True})
 	commitData = json.loads(getCommit.text)
 	repoURL = commitData['repo']
-	## Pull git repo to local for evaluation
     
+	subprocess.call(["bash", "workerInit.sh",repoURL])
+
 	##Notify manager of pull success
 	_ = requests.get(getURL,json = {'pullStatus' : False})
     
