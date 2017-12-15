@@ -77,20 +77,17 @@ class API_Cyclo():
     def get(self):
         if self.server.WorkerCount < self.server.WorkerTotal:
             ##Still Waiting for all workers to join
-            return {'shaVal': 'wait'}
+            return {'sha': 'wait'}
         elif len(self.server.commits) == 0:
             ##No Commits to send to worker
-            return {'shaVal' : 'no commits'}
+            return {'sha' : 'no commits'}
         else:
             shaVal = self.server.commits[0]
             del self.server.commits[0]
-            return {'shaVal' : shaVal}
-        
-    
-    def post(self):
+            return {'sha' : shaVal}
+   def post(self):
 	arguments = self.reqparser.parse_args()
-	self.server.commits.append({'sha':args['commitSha'], 'complexity':arguments['complexity']})
-
+	self.server.commits.append({'commitSha':arguments['sha'], 'complexity':arguments['ccVal']})
 	if len(self.server.commits) == self.server.numCommits:
 		endtime = time.time() - self.server.timeStart
 		avgCC = 0
