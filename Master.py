@@ -22,7 +22,7 @@ class Manager():
         self.WorkerCount = 0        ## Currently engaged workers
         print('Working with unauthenticated requests')
         print('Repositories upto a maximum of 200 commits')
-        response = requests.get('url to github repo')
+        response = requests.get('https://api.github.com/repos/hanutm/Chat-Server-Client/commits?page=1&per_page=200')
         resp_data = json.loads(response)
         self.commits = []               ##class commit list variable for storing all sha values
         for i in resp_data:
@@ -47,7 +47,7 @@ class getRepo():
         arguments = self.reqparser.parse_args()
         if arguments['pullStatus'] == True:
             print('Not Pulled')
-            return {'repo':'git url'}
+            return {'repo':'https://github.com/hanutm/Chat-Server-Client'}
         else :
             print('Pulled')
             self.server.WorkerCount += 1
@@ -85,14 +85,14 @@ class API_Cyclo():
             shaVal = self.server.commits[0]
             del self.server.commits[0]
             return {'sha' : shaVal}
-   def post(self):
+    def post(self):
 	arguments = self.reqparser.parse_args()
 	self.server.commits.append({'commitSha':arguments['sha'], 'complexity':arguments['ccVal']})
 	if len(self.server.commits) == self.server.numCommits:
 		endtime = time.time() - self.server.timeStart
-		avgCC = 0
-		for x in self.server.commits:
-			avgCC += commits(x['complexity'])
+	avgCC = 0
+	for x in self.server.commits:
+		avgCC += commits(x['complexity'])
 	avgCC = avgCC/numCommits
 	print("Overall Cyclomatic Complexity = ", avgCC)
 
